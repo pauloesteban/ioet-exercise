@@ -29,4 +29,5 @@ python -m unittest test_acme
 
 ## Future Work
 - [x] Range of hours to set rate.
+- [ ] Use datetime
 - [ ] Read a txt file.

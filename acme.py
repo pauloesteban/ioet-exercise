@@ -2,8 +2,6 @@
 # Created by Paulo Chiliguano
 # May 2021
 
-from datetime import time
-
 class Employee():
     """A class to represent an employee.
 
@@ -47,9 +45,9 @@ class Employee():
         }
         self._hours_range =  \
         {
-            "early":[time(0,1), time(9,0)],
-            "normal":[time(9,1), time(18,0)],
-            "late":[time(18,1), time(0,0)]
+            "early":[0, 9],
+            "normal":[9, 18],
+            "late":[18, 24]
         }
 
 
@@ -66,13 +64,11 @@ class Employee():
         (int) : Class of the hour
         """
 
-        dummy = time.fromisoformat(hour)
-        print(dummy)
-        if (dummy >= self._hours_range['early'][0]) and (dummy <= self._hours_range['early'][1]):
+        if hour >= self._hours_range['early'][0] and hour <= self._hours_range['early'][1]:
             return 0
-        elif (dummy >= self._hours_range['normal'][0]) and (dummy <= self._hours_range['normal'][1]):
+        elif hour >= self._hours_range['normal'][0] and hour <= self._hours_range['normal'][1]:
             return 1
-        elif (dummy >= self._hours_range['late'][0]) and (dummy <= self._hours_range['late'][1]):
+        elif hour >= self._hours_range['late'][0] and hour <= self._hours_range['late'][1]:
             return 2
         else:
             raise Exception('FormatError: Not a valid hour.')
@@ -92,23 +88,28 @@ class Employee():
         (int) : USD dollars
         """
         begin_timeslot, end_timeslot = timeslot.split('-')
-        
-        begin_hour_class = self._classify_hour(begin_timeslot)
-        end_hour_class = self._classify_hour(end_timeslot)
 
-        # key = 'weekday' if is_weekday else 'weekend'
+        begin_hour_num = int(begin_timeslot[:2])
+        end_hour_num = int(end_timeslot[:2])
+        
+        begin_hour_class = self._classify_hour(begin_hour_num)
+        end_hour_class = self._classify_hour(end_hour_num)
+
+        key = 'weekday' if is_weekday else 'weekend'
 
         if end_hour_class - begin_hour_class == 0:
             # When the timeslot is in-between an interval
-            return end_time - begin_time
-        elif end_hour_class - begin_hour_class == 1:
+            rate = self._rates[key][begin_hour_class]
+            end_hour_num = 24 if end_hour_num == 0 else end_hour_num
+            return (end_hour_num - begin_hour_num) * rate
+        elif abs(end_hour_class - begin_hour_class) == 1:
             # When the timeslot shares 2 intervals
             return 0
-        elif end_hour_class - begin_hour_class == 2:
+        elif abs(end_hour_class - begin_hour_class) == 2:
             # When the timeslot shares 3 intervals
             return 0
         else:
-            raise Exception('UnexpectedError: Is the schedule well formated?')
+            raise Exception(f'UnexpectedError: Is the schedule well formated? {end_hour_class} {begin_hour_class}')
 
     
     def _convert_daily_work_to_usd(self, day_and_timeslot: str) -> int:
