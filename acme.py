@@ -103,10 +103,10 @@ class Employee():
             end_hour_num = 24 if end_hour_num == 0 else end_hour_num
             return (end_hour_num - begin_hour_num) * rate
         elif abs(end_hour_class - begin_hour_class) == 1:
-            # When the timeslot shares 2 intervals
+            # TODO: When the timeslot shares 2 intervals
             return 0
         elif abs(end_hour_class - begin_hour_class) == 2:
-            # When the timeslot shares 3 intervals
+            # TODO: When the timeslot shares 3 intervals
             return 0
         else:
             raise Exception(f'UnexpectedError: Is the schedule well formated? {end_hour_class} {begin_hour_class}')

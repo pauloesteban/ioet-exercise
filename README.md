@@ -12,10 +12,11 @@ Timeslot interval is transformed to `datetime.time` basic data type. Limits of t
 
 ## Requisites
 - Python 3.8.9
+- Text file that contains the employee string line by line
 
 ## Running
 ```
-python acme.py
+python main.py
 ```
 
 ## Testing
@@ -30,4 +31,4 @@ python -m unittest test_acme
 ## Future Work
 - [x] Range of hours to set rate.
 - [ ] Use datetime
-- [ ] Read a txt file.
+- [x] Read a txt file.
