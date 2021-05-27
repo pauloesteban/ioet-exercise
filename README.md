@@ -8,7 +8,7 @@ An Employee user defined type is instantiated with this custom-format string.
 
 The input data is handled by splitting it using the delimiting characters (e.g. `=`, `,`, `:`, `-`) and substrings to obtain the name, days and hours. Days are classified in weekdays and weekends.
 
-Timeslot interval is transformed to `datetime.time` basic data type. Limits of the interval are used to classify the rate and sum up the total number of hours.
+Timeslot interval provides starting and finishing hours. Limits of the interval are used to classify the rate and then sum up the total number of hours.
 
 ## Requisites
 - Python 3.8.9
@@ -30,5 +30,6 @@ python -m unittest test_acme
 
 ## Future Work
 - [x] Range of hours to set rate.
-- [ ] Use datetime
 - [x] Read a txt file.
+- [ ] Use datetime for time operations.
+- [ ] Allow timeslots at different rates.
